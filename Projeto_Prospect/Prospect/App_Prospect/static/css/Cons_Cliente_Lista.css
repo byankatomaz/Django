@@ -5,18 +5,7 @@
     --cor_primaria : rgb(252, 249, 249);
 }
 
-/* body {
-    width: 100%;
-    height: 100%;
-    align-content: center;
-    width: 1600px;
-   
-} */
 
-/* .fundo_menu {
-   
-    background-color: #a4b2c2;
-} */
 
 div.fundo_menu{
     display: inline-block;
@@ -24,81 +13,56 @@ div.fundo_menu{
     height: 105px;
     column-count:3;
     position: relative;
-    background-color: #a4b2c2;
+    background-color: #707275;
    
     }
-/* div{
-    display: inline-block;
-    width: 1600px;
-    height: 105px;
-    column-count:3;
-    position: relative;
-    
-   
-    } */
 
-    .nome_sistema{
+
+.nome_sistema{
        
-        text-align: center;
-        font-size: 30px;
-        font-weight: bold;
-        font-family: arial;
-        color: white;
-        position: absolute;
-        margin: -100px 0px 0 550px;
-        
-    }
-    .botao_login{
-        text-align: center;
-        
-        
-    }
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: arial;
+    color: white;
+    position: absolute;
+    margin: -100px 0px 0 550px;
     
-    .btn{
-        width: 150px;
-        height: 60px;
-        /* alinhamento do botao no Header */
-        position: absolute;
-        margin: 20px 0 0 500px;
-       
-        border: solid 1px gray;
-        background: none;
-        font-size: 30px;
-        font-weight: bold;
-        font: Arial;
-        background-color: rgb(241, 7, 7);
-        color: white;
-        /*Borda arredondada */
-        border-radius: 40px;
-        /*Faz o cursor mudar para maozinha quando posicionado sobre ele */
-        cursor: pointer;
-        
-        
-    }
+}
+.botao_login{
+    text-align: center;
     
-     /*hover é acionado quando o cursor estiver sobre o botão. Neste caso faremos um vermelho mais escuro */
-    .btn:hover{
-        background-color: rgb(189, 7, 7);
-        color: rgb(218, 196, 196);
-    }
     
-    .btn_conf_cancel{
-        width: 150px;
-        height: 40px;
-        border: solid 1px rgb(190, 14, 14);
-        background: none;
-        font-size: 20px;
-        font-weight: bold;
-        font: Arial;
-        background-color: rgb(230, 14, 14);
-        color: white;
-        /*Borda arredondada */
-        border-radius: 40px;
-        /*Faz o cursor mudar para maozinha quando posicionado sobre ele */
-        cursor: pointer;
-        
-        
-    }
+}
+
+.btn{
+    width: 150px;
+    height: 60px;
+    /* alinhamento do botao no Header */
+    position: absolute;
+    margin: 20px 0 0 500px;
+   
+    border: solid 1px gray;
+    background: none;
+    font-size: 30px;
+    font-weight: bold;
+    font: Arial;
+    background-color: rgb(241, 7, 7);
+    color: white;
+    /*Borda arredondada */
+    border-radius: 40px;
+    /*Faz o cursor mudar para maozinha quando posicionado sobre ele */
+    cursor: pointer;
+    
+    
+}
+
+ /*hover é acionado quando o cursor estiver sobre o botão. Neste caso faremos um vermelho mais escuro */
+.btn:hover{
+    background-color: rgb(189, 7, 7);
+    color: rgb(218, 196, 196);
+}
+
 
 
 .menu ul {
@@ -152,27 +116,42 @@ div.fundo_menu{
 /*Fim sub menu*/
 
 
+   
+*{
+    margin: 0;
+    padding: 0;
+ }
+ 
+
 
 body{
     font-family: arial;
-    color:rgb(17, 1, 1)
+    color:rgb(17, 1, 1);
     /* display: flex;  */
     /* justify-content: center; */
 
    }
-   
-*{
-   margin: 0;
-   padding: 0;
-}
 
 body {
     /* width: 100%;
     height: 100%; */
-    align-content: center;
+    /* align-content: center; */
+    /* display: flex;  */
+    /* justify-content: center; */
+    /* align-items: center; */
     width: 1600px;
     height: 600px;
    }  
+
+
+/* body{
+    background: #121212;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
 
 /* Div Principal é para englobar a div container e assim poder centralizar o container  */
 .principal{
@@ -201,72 +180,50 @@ body {
     
 }
 
-/* Messages */
-ul.messages {
-    padding:0;
-}
-ul.messages li {
-   list-style: none;
-   border:
-}
+/* https://www.w3schools.com/cssref/pr_class_display.php */
+/* refrencias para usar display */
 .form{
-    /* faz a label e o campo afastar da borda u pouco */
-    padding: 8px;
+    /* faz a label e o campo afastar da borda um pouco */
+    padding: 16px;
     padding-right: 34px;
 }
 
 .form-content{
     margin-bottom: 8px;
-    padding-bottom: 18px;
+    padding-bottom: 2px;
     position: relative;
 }
 .form-content label{
+    width: 150px;
     display: inline-block;
     margin-bottom: 4px;
+   
+    
 }
 
 .form-content input{
-    display: block;
-    width: 100%;
+    display: inline;
+    width: 70%;
     padding: 8px;
     border: 2px solid #dfdfdf;
 }
 
-.form-content textarea{
-    display:block;
-    width: 100%;
+.form-content select{
+    display: inline;
+    width: 70%;
     padding: 8px;
     border: 2px solid #dfdfdf;
 }
 
-/* Mensagem de erro validação JS*/
+/* Mensagem de erro */
 .form-content a{
     position: absolute;
     bottom: -8px;
     left: 0 ;
     visibility: hidden;
    }
-
-.form-content select{
-   font-size: 14px;
-   width: 400px;
-   height: 32px;
-}
-
-/* Mensagem do Servidor */
-ul.mensagem_do_servidor {
-    background: #7d7f81;
-    padding: 24px;
-    text-align:center;
-    color: #fff;
-}
-
-ul.mensagem_do_servidor li {
-    list-style: none;
-}
-/* Fim de Mensagem do Servidor */
-
-.btn_conf_cancel{
+ 
+.btn_cons_cancel{
     width: 150px;
     height: 40px;
     border: solid 1px rgb(138, 86, 86);
@@ -292,15 +249,44 @@ ul.mensagem_do_servidor li {
 
 }
 
+table, th, td{
+    border: 1px solid rgb(88, 85, 85);
+    border-collapse: collapse;
+    padding: 8px;
+}
+table {
+    width: 800px;
+}
+
+
+th{
+    background-color: gray ;
+    color: white
+}
+
+/* Faz a tabela zebrada de 2 em 2 linhas. Para mais linha mudo o 2 pelo numero desejado */
+tr:nth-child(2n){
+    background-color: lightgray;
+}
 div.rodape1 {
     text-align: center;
     font-size: 18px;
     font-weight: bold;
     font-family: arial;
-    color: rgb(256, 256, 256);
+    color: rgb(80, 77, 77);
     display: flex;
+    /* flex-direction: column; */
     width: 1600px;
     padding: 25px;
     justify-content: center;
 }
 
+.form-content.error input{
+    border-color: #ff3b25;
+
+}
+
+.form-content.error a{
+    color: #ff3b25;
+    visibility: visible; 
+}

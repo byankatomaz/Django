@@ -2,14 +2,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/cad_user.css' %}">
     <title>Programação Web Back End</title>
 </head>
 <header class="login">
     
     <div class="fundo_menu">
         <div class="logo_senai">
-             <a href="/"><img src="{% static 'imagens/logo_senai.png' %}" /></a>
+            <a href="/"><img src="{% static 'imagens/logo_senai.png' %}" /></a>
         </div>
         <div class="nome_sistema">
              Programação Web Back End<br>
@@ -17,7 +17,16 @@
         </div>
         <div class="botao_login">
             <button class="btn btn_login">Login</button>
-        </div> 
+        </div>
+        {% if user.is_authenticated %}
+        <div class="botao_login">
+            <a href="accounts/logout"><button class="btn btn_login">Logout</button></a>
+        </div>
+        {% else %}
+        <div class="botao_login">
+            <a href="accounts/login"><button class="btn btn_login">Login</button></a>
+        </div>
+        {% endif %}
     </div>
 </header> 
 
@@ -25,6 +34,7 @@
 
 <nav class="menu">
     <ul>
+        {% if user.is_authenticated %}
         <li><a href="">Cadastros</a>
             <ul>
                 <li><a href="Cad_Cliente.html">Clientes</a></li>
@@ -44,14 +54,17 @@
         <li><a href="Registrar.html">Registrar Atendimento</a></li>
         <li><a href="Consultar.html">Consultar Atendimento</a></li>
         <li><a href="Relatorios.html">Relatórios</a></li>
+        <li> | Usuário logado: {{usuario_logado}}</a></li>
+        {% endif %}
     </ul> 
 </nav>      
 <body>
     <div class="principal">
     <div class="container">
         <section class="enquadramento">
-            <h1> Cadastro de Clientes</h1>
+            <h1> Cadastro de Usuários</h1>
         </section>
+
         {% if messages %}
             <ul class="mensagem_do_servidor" style="background: #7d7f81; padding: 24px; text-align:center; color: #fff;">
                 {% for mensagem in messages %}
@@ -59,17 +72,14 @@
                 {% endfor %}
             </ul>
         {% endif %}
-        <form id="form" class="form" method="POST" action="{% url 'salvar_cliente_novo' %}">{% csrf_token %}
+
+        <form id="form" class="form" method="POST" action="{% url 'salvar_usuario' %}">{% csrf_token %}
+
             
                 <div class="form-content">
-                    <label for="nome">Cliente</label>
-                    <input type="text" id="nome" name="nome" placeholder="Digite o nome do Cliente" />
+                    <label for="nome">Usuario</label>
+                    <input type="text" id="nome" name="usuario"placeholder="Digite o nome do Cliente" />
                     <a>Nome deve ter no mínimo 3 caracteres</a>
-                </div>
-                <div class="form-content">
-                    <label for="fone">Telefone</label>
-                    <input type="text" id="telefone" name="telefone" placeholder="Digite o telefone do Cliente"  />
-                    <a>Telefone deve conter DDD </a>
                 </div>
                 <div class="form-content">
                     <label for="email">Email</label>
@@ -77,18 +87,16 @@
                     <a>Digite um endereço de email válido</a>
                 </div>
                 <div class="form-content">
-                    <label for="observacao">Observações</label>
-                    <textarea name="observacao" id="observacao" cols="25" rows="10" placeholder="Digite aqui observações sobre o cliente"></textarea>
-                    <a>Observações do cliente</a>
+                    <label for="fone">Senha</label>
+                    <input type="text" id="senha" name="senha" placeholder="Digite o telefone do Cliente"  />
+                    <a>Telefone deve conter DDD </a>
                 </div>
+                
                 <div class="botoes">
                     <div class="botao_confirmar">
                         <button type="submit" class="btn_conf_cancel btn_confirmar">Confirmar</button>
                     </div>
-                    <div class="botao_cancelar">
-                        <button type="submit" class="btn_conf_cancel btn_cancelar">Cancelar</button>
-                    </div>
-
+                    
                 </div>
         </form>
 
@@ -96,13 +104,10 @@
 
     </div>    
     </div>
-
-    <script src="{% static 'js/script.js' %}"/>
-
 </body>
 
 
-
+<script src="./js/script.js"></script>
 
 
 <footer class="rodape">

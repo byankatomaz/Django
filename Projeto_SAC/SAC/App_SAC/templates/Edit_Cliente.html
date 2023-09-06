@@ -9,7 +9,8 @@
     
     <div class="fundo_menu">
         <div class="logo_senai">
-             <a href="/"><img src="{% static 'imagens/logo_senai.png' %}" /></a>
+            <a href="/"><img src="{% static 'imagens/logo_senai.png' %}" /></a>
+
         </div>
         <div class="nome_sistema">
              Programação Web Back End<br>
@@ -50,35 +51,31 @@
     <div class="principal">
     <div class="container">
         <section class="enquadramento">
-            <h1> Cadastro de Clientes</h1>
+            <h1> Editando registro de Cliente</h1>
         </section>
-        {% if messages %}
-            <ul class="mensagem_do_servidor" style="background: #7d7f81; padding: 24px; text-align:center; color: #fff;">
-                {% for mensagem in messages %}
-                   <li style="list-style: none;" {% if mensagem.tags %}class="alert alert-{{message.tags}}"{% endif %}>{{mensagem}}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-        <form id="form" class="form" method="POST" action="{% url 'salvar_cliente_novo' %}">{% csrf_token %}
+
+        <form id="form" class="form" method="POST" action="{% url 'salvar_cliente_editado' %}">{% csrf_token %}
+
             
-                <div class="form-content">
-                    <label for="nome">Cliente</label>
-                    <input type="text" id="nome" name="nome" placeholder="Digite o nome do Cliente" />
+               <div class="form-content">
+                   <label for="nome">Cliente</label>
+                   <input type="hidden"  name="id_cliente" id="id_cliente"  value="{{dados_do_cliente.id}}" />
+                   <input type="text"  name="nome" id="nome"  value="{{dados_do_cliente.nome}}" placeholder="Digite o nome do Cliente" />
                     <a>Nome deve ter no mínimo 3 caracteres</a>
                 </div>
                 <div class="form-content">
                     <label for="fone">Telefone</label>
-                    <input type="text" id="telefone" name="telefone" placeholder="Digite o telefone do Cliente"  />
+                    <input type="text" name="telefone" id="telefone" value="{{dados_do_cliente.telefone}}" placeholder="Digite o telefone do Cliente"  />
                     <a>Telefone deve conter DDD </a>
                 </div>
                 <div class="form-content">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Digite o email do Cliente"  />
+                    <input type="email" name="email" id="email" value="{{dados_do_cliente.email}}" placeholder="Digite o email do Cliente"  />
                     <a>Digite um endereço de email válido</a>
                 </div>
                 <div class="form-content">
                     <label for="observacao">Observações</label>
-                    <textarea name="observacao" id="observacao" cols="25" rows="10" placeholder="Digite aqui observações sobre o cliente"></textarea>
+                    <textarea name="observacao" id="observacao"  cols="25" rows="10" placeholder="Digite aqui observações sobre o cliente">{{dados_do_cliente.observacao}}</textarea>
                     <a>Observações do cliente</a>
                 </div>
                 <div class="botoes">
@@ -96,9 +93,6 @@
 
     </div>    
     </div>
-
-    <script src="{% static 'js/script.js' %}"/>
-
 </body>
 
 

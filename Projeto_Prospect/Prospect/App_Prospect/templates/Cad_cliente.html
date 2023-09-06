@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/cad_cliente.css' %}">
     <title>Programação Web Back End</title>
 </head>
 <header class="login">
@@ -13,7 +13,7 @@
         </div>
         <div class="nome_sistema">
              Programação Web Back End<br>
-             Sistema de atendimento ao cliente
+             Sistema de prospecção de cliente
         </div>
         <div class="botao_login">
             <button class="btn btn_login">Login</button>
@@ -59,7 +59,7 @@
                 {% endfor %}
             </ul>
         {% endif %}
-        <form id="form" class="form" method="POST" action="{% url 'salvar_cliente_novo' %}">{% csrf_token %}
+        <form id="form" class="form" method="POST" action="{% url 'salvar_cliente_novo_prospect' %}">{% csrf_token %}
             
                 <div class="form-content">
                     <label for="nome">Cliente</label>

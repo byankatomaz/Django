@@ -13,7 +13,6 @@ btnConfirmar.addEventListener("click", (event) =>{
     valida_dados();
 })
 
-
 function valida_dados(){
     const nomeValue = nome.value;
     const telefoneValue = telefone.value;

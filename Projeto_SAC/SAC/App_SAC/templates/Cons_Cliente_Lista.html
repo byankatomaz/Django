@@ -14,7 +14,7 @@
         </div>
         <div class="nome_sistema">
              Programação Web Back End<br>
-             Sistema de prospecção de cliente
+             Sistema de atendimento ao cliente
         </div>
         <div class="botao_login">
             <button class="btn btn_login">Login</button>
@@ -36,7 +36,7 @@
         <li><a href="Registrar">Registrar Atendimento</a></li>
         <li><a href="Consultar">Consultar Atendimento</a></li>
         <li><a href="Relatorios">Relatórios</a></li>
-        <li><a href="TESTE.html">TESTES</a></li>
+        <li> | Usuário logado: {{usuario_logado}}</a></li>
     </ul> 
 </nav> 
      
@@ -90,8 +90,27 @@
 
                 </div>
         </form>
+
         <hr>
         <table>
+            
+            <div class="pagination">
+                <span class="step-links">
+                    {% if dados_clientes.has_previous %}
+                        <a href="?page={{ dados_clientes.previous_page_number }}&dado_pesquisa={{dado_pesquisa}}">Anterior</a>
+                    {% endif %}
+                
+                    <span class="current">
+                        {{ dados_clientes.number }} de {{ dados_clientes.paginator.num_pages }}
+                    </span>
+                
+                    {% if dados_clientes.has_next %}
+                        <a href="?page={{ dados_clientes.next_page_number }}&dado_pesquisa={{dado_pesquisa}}">Próxima</a>
+                    {% endif %}
+                </span>
+            </div>
+            
+
             <tr>
                 <th>Cliente</th>
                 <th>Telefone</th>

@@ -171,7 +171,7 @@ body {
     height: 100%; */
     align-content: center;
     width: 1600px;
-    height: 600px;
+    height: 400px;
    }  
 
 /* Div Principal é para englobar a div container e assim poder centralizar o container  */
@@ -186,7 +186,7 @@ body {
  /* arredonda as bordas  */
  /* border-radius: 14px; */
  margin: 14px;
- max-width: 800px;
+ max-width: 300px;
  width: 100%;
  box-sizing: 0 3px 5px rbga(0,0,0, 0.5);
 
@@ -201,14 +201,6 @@ body {
     
 }
 
-/* Messages */
-ul.messages {
-    padding:0;
-}
-ul.messages li {
-   list-style: none;
-   border:
-}
 .form{
     /* faz a label e o campo afastar da borda u pouco */
     padding: 8px;
@@ -239,20 +231,14 @@ ul.messages li {
     border: 2px solid #dfdfdf;
 }
 
-/* Mensagem de erro validação JS*/
+/* Mensagem de erro do JS */
 .form-content a{
     position: absolute;
     bottom: -8px;
     left: 0 ;
     visibility: hidden;
    }
-
-.form-content select{
-   font-size: 14px;
-   width: 400px;
-   height: 32px;
-}
-
+ 
 /* Mensagem do Servidor */
 ul.mensagem_do_servidor {
     background: #7d7f81;
@@ -264,7 +250,9 @@ ul.mensagem_do_servidor {
 ul.mensagem_do_servidor li {
     list-style: none;
 }
-/* Fim de Mensagem do Servidor */
+
+   
+
 
 .btn_conf_cancel{
     width: 150px;

@@ -6,6 +6,7 @@ const observacao = document.getElementById("observacao");
 
 
 let btnConfirmar = document.querySelector("#btnConfirmar");
+let btnConsultar = document.querySelector("#btnConsultar");
 let btnCancelar = document.querySelector("#btnCancelar");
 
 btnConfirmar.addEventListener("click", (event) =>{
@@ -13,6 +14,10 @@ btnConfirmar.addEventListener("click", (event) =>{
     valida_dados();
 })
 
+btnConsultar.addEventListener("click", (event) =>{
+    event.preventDefault();
+    valida_dados();
+})
 
 function valida_dados(){
     const nomeValue = nome.value;
