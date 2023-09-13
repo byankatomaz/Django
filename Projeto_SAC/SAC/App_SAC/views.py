@@ -47,7 +47,7 @@ def cons_cliente(request):
     dado_pesquisa_telefone = request.POST.get('telefone')
     dado_pesquisa_email = request.POST.get('email')
     
-    page = request.GET.get('page' )
+    page = request.GET.get('page')
     
     if page:
         dado_pesquisa = request.GET.get('dado_pesquisa')
@@ -56,16 +56,16 @@ def cons_cliente(request):
      
         cliente = paginator.get_page(page)
             
-        return render(request, 'Cons_Cliente_Lista.html', {'dados_clientes': cliente, 'dado_pesquisa': dado_pesquisa}, {'usuario_logado': usuario_logado})
+        return render(request, 'Cons_Cliente_Lista.html', {'dados_clientes': cliente, 'dado_pesquisa': dado_pesquisa})
         
     
         
     if dado_pesquisa_nome is not None and dado_pesquisa_nome != '':
-        clientes = Cliente.objects.filter(nome__icontains=dado_pesquisa_nome).order_by('nome')
+        clientes = Cliente.objects.filter(nome__icontains=dado_pesquisa_nome)
         
         paginator = Paginator(clientes, 5)
         
-        page = request.GET.get('page' )
+        page = request.GET.get('page')
      
         cliente = paginator.get_page(page)
             
@@ -150,6 +150,12 @@ def salvar_atend_novo(request):
         messages.info(request, 'Atendente ' + nome_atend + ' cadastrado com sucesso!', 'cad_atend')
         cons_users = User.objects.all()
         return render(request, 'Cad_Atendente.html', {'usuario_logado': usuario_logado, 'cons_users': cons_users})
+
+@login_required
+def edit_atend(request, id):
+    usuario_logado = request.user.username
+    dados_logar = get_object_or_404(Atendente, pk=id)
+    return render(request, 'Edit_Atendente.html', {'dodos_do_atend': dados_logar, 'usuario_logado': usuario_logado})
     
     
 @login_required

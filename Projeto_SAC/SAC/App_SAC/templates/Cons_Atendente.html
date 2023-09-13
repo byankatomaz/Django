@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/Cons_Atendente.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/Cons_Cliente_Lista.css' %}">
     <title>Document</title>
 </head>
 <header class="login">
@@ -123,7 +123,7 @@
                 <td>{{igs.nome_atend}}</td>
                 <td>{{igs.telefone_atend}}</td>
                 <td>{{igs.observacao_atend}}</td>
-                <td><a href="/edit_atendente/{{igs.id}}"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                <td><a href="/edit_atend/{{igs.id}}"><i class="fa-solid fa-pen-to-square"></i></a></td>
             </tr>
             {% endfor %}
 

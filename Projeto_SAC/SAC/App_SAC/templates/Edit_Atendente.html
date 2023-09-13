@@ -1,3 +1,4 @@
+{%load static%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,7 +71,7 @@
             </ul>
        
         
-        <form id="form" class="form" method="POST" action="">
+        <form id="form" class="form" method="POST" action="{% url 'edit_atend' %}">{% csrf_token %}
 
                 <div class="form-content">
                     <label for="nome">Atendente</label>
