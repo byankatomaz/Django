@@ -23,8 +23,10 @@
 </header> 
 
 
+
 <nav class="menu">
     <ul>
+        
         <li><a href="">Cadastros</a>
             <ul>
                 <li><a href="Cad_Cliente.html">Clientes</a></li>
@@ -45,47 +47,37 @@
         <li><a href="Consultar.html">Consultar Atendimento</a></li>
         <li><a href="Relatorios.html">Relatórios</a></li>
         <li> | Usuário logado: {{usuario_logado}}</a></li>
-    </ul>
-</nav>    
+        
+    </ul> 
+</nav>      
 <body>
     <div class="principal">
     <div class="container">
         <section class="enquadramento">
-            <h1> Editando registro de Cliente</h1>
+            <h1> Editando Departamento</h1>
         </section>
+        
+        <form id="form" class="form" method="POST" action="{% url 'salvar_depto_editado' %}">{% csrf_token %}
 
-        <form id="form" class="form" method="POST" action="{% url 'salvar_cliente_editado' %}">{% csrf_token %}
-
-            
-               <div class="form-content">
-                   <label for="nome">Cliente</label>
-                   <input type="hidden"  name="id_cliente" id="id_cliente"  value="{{dados_do_cliente.id}}" />
-                   <input type="text"  name="nome" id="nome"  value="{{dados_do_cliente.nome}}" placeholder="Digite o nome do Cliente" />
+                <div class="form-content">
+                    <label for="depto">Departamento</label>
+                    <input type="hidden"  name="id_departamento" id="id_departamento"  value="{{dados_do_depto.id}}" />
+                    <input type="text" id="depto" name="nome_depto" value="{{dados_do_depto.nome_depto}}" placeholder="Digite o Departamento" />
                     <a>Nome deve ter no mínimo 3 caracteres</a>
                 </div>
+                
+
                 <div class="form-content">
-                    <label for="fone">Telefone</label>
-                    <input type="text" name="telefone" id="telefone" value="{{dados_do_cliente.telefone}}" placeholder="Digite o telefone do Cliente"  />
-                    <a>Telefone deve conter DDD </a>
+                    <label for="observacao">Informações sobre o Departamento</label>
+                    <textarea name="observacao_depto" id="observacao" cols="25" rows="10" placeholder="Digite aqui informações sobre o Departamento">{{dados_do_depto.observacao_depto}}</textarea>
+                    <a>Observações do departamento</a>
                 </div>
-                <div class="form-content">
-                    <label for="email">Email</label>
-                    <input type="email" name="email" id="email" value="{{dados_do_cliente.email}}" placeholder="Digite o email do Cliente"  />
-                    <a>Digite um endereço de email válido</a>
-                </div>
-                <div class="form-content">
-                    <label for="observacao">Observações</label>
-                    <textarea name="observacao" id="observacao"  cols="25" rows="10" placeholder="Digite aqui observações sobre o cliente">{{dados_do_cliente.observacao}}</textarea>
-                    <a>Observações do cliente</a>
-                </div>
+                               
+
                 <div class="botoes">
                     <div class="botao_confirmar">
                         <button type="submit" class="btn_conf_cancel btn_confirmar">Confirmar</button>
                     </div>
-                    <div class="botao_cancelar">
-                        <button type="submit" class="btn_conf_cancel btn_cancelar">Cancelar</button>
-                    </div>
-
                 </div>
         </form>
 
@@ -96,7 +88,7 @@
 </body>
 
 
-
+<script src="./js/script.js"></script>
 
 
 <footer class="rodape">

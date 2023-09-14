@@ -1,35 +1,38 @@
-{% load static %}
 
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/Cons_Cliente_Lista.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/Cons_Depto.css' %}">
     <title>Document</title>
 </head>
 <header class="login">
     <div class="fundo_menu">
         <div class="logo_senai">
-             <a href="/"><img src="{% static 'imagens/logo_senai.png' %}" /></a>
+            <a href="/"><img src="{% static 'imagens/logo_senai.png' %}" /></a>
+
         </div>
         <div class="nome_sistema">
              Programação Web Back End<br>
              Sistema de atendimento ao cliente
         </div>
-
-
+        
+        
+        
         <div class="botao_login">
             <a href="accounts/login"><button class="btn btn_login">Login</button></a>
         </div>
-
+        
+        
     </div>
-</header>
+</header> 
 
 
 <nav class="menu">
     <ul>
-
+       
         <li><a href="">Cadastros</a>
             <ul>
                 <li><a href="Cad_Cliente.html">Clientes</a></li>
@@ -50,17 +53,17 @@
         <li><a href="Consultar.html">Consultar Atendimento</a></li>
         <li><a href="Relatorios.html">Relatórios</a></li>
         <li> | Usuário logado: {{usuario_logado}}</a></li>
-
-    </ul>
-</nav>
-
+       
+    </ul> 
+</nav> 
+     
 <body>
     <div class="principal">
     <div class="container">
         <section class="enquadramento">
-            <h1> Consultar Atendente</h1>
+            <h1> Consultar Departamentos</h1>
         </section>
-
+        
         {% if messages %}
             <ul class="mensagem_do_servidor" style="background: #7d7f81; padding: 24px; text-align:center; color: #fff;">
                 {% for mensagem in messages %}
@@ -68,29 +71,20 @@
                 {% endfor %}
             </ul>
         {% endif %}
-
-
-
-
+        
         <!-- https://www.w3schools.com/cssref/index.php -->
+        
+        <form id="form" class="form" method="POST" action="{% url 'cons_depto' %}">{% csrf_token %}
 
-        <form id="form" class="form" method="POST" action="{% url 'cons_atend' %}">{% csrf_token %}
-
-
-            <div class="seleciona_todos">
-                <label for="seleciona_todos">Selecionar Somente Atendentes Ativos </label><br><br>
-                <input type="radio" name="seleciona_todos" checked value="S"/> Sim<br />
-                <input type="radio" name="seleciona_todos" value="N"/> Não<br /> 
-            </div>
             <br><hr><br>
             <div class="form-content">
                 <br>
-                <label for="cliente">Atendente </label>
-                <input type="text" id="atendente" name="atendente" placeholder="Digite o nome do Atendente desejado" value="" />
+                <label for="depto">Departamento </label>
+                <input type="text" id="depto" name="departamento" placeholder="Digite o nome do Departamento desejado" value="" />
             </div>
-
-
-
+           
+                
+                
                 <div class="botoes">
                     <div class="botao_consultar">
                         <button id="btnConsultar" type=submit class="btn_cons_cancel btn_consultar">Consultar</button>
@@ -99,34 +93,34 @@
                 </div>
         </form>
         <hr>
-        {% if todos_atendentes.has_previous %}
-            <a href="?page={{todos_atendentes.previous_page_number}}&dado_pesquisa={{dado_pesquisa}}"><i class="fas fa-arrow-left"></i></a>
+        
+        {% if todos_deptos.has_previous %}
+            <a href="?page={{todos_deptos.previous_page_number}}&dado_pesquisa={{dado_pesquisa}}"><i class="fas fa-arrow-left"></i></a>
         {% endif %}
 
         <span>
-            {{todos_atendentes.number}} de {{todos_atendentes.paginator.num_pages}}
+            {{todos_deptos.number}} de {{todos_deptos.paginator.num_pages}}
         </span>
 
-        {% if todos_atendentes.has_next %}
-            <a href="?page={{todos_atendentes.next_page_number}}&dado_pesquisa={{dado_pesquisa}}"><i class="fas fa-arrow-right"></i></a>
+        {% if todos_deptos.has_next %}
+            <a href="?page={{todos_deptos.next_page_number}}&dado_pesquisa={{dado_pesquisa}}"><i class="fas fa-arrow-right"></i></a>
         {% endif %}
 
         <table>
             <tr>
-                <th>Atendente</th>
-                <th>Telefone</th>
-                <th>Observações</th>
+                <th>Departamento</th>
+                <th>Informações do Departamento</th>
                 <th>Editar</th>
             </tr>
-            {% for igs in todos_atendentes %}
+            
+            {% for igs in todos_deptos %}
             <tr>
-                <td>{{igs.nome_atend}}</td>
-                <td>{{igs.telefone_atend}}</td>
-                <td>{{igs.observacao_atend}}</td>
-                <td><a href="/edit_atend/{{igs.id}}"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                <td>{{igs.nome_depto}}</td>
+                <td>{{igs.observacao_depto}}</td>
+                <td><a href="/edit_depto/{{igs.id}}"><i class="fa-solid fa-pen-to-square"></i></a></td>
             </tr>
             {% endfor %}
-
+         
         </table>
 
 

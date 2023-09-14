@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from .models import Cliente, Atendente
+from .models import Cliente, Atendente, Departamento, Situacao
 from django.contrib import messages
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.contrib.auth.decorators import login_required
@@ -87,7 +87,7 @@ def cons_cliente(request):
 def edit_cliente(request, id):
     usuario_logado = request.user.username
     dados_editar = get_object_or_404(Cliente, pk=id)
-    return render(request, 'Edit_Cliente.html', {'dados_do_cliente': dados_editar}, {'usuario_logado': usuario_logado})
+    return render(request, 'Edit_Cliente.html', {'usuario_logado': usuario_logado, 'dados_do_cliente': dados_editar})
 
 def salvar_cliente_editado(request):
         usuario_logado = request.user.username
@@ -114,13 +114,12 @@ def salvar_cliente_editado(request):
         
 @login_required
 def delete_cliente(request, id):
-    usuario_logado = request.user.username
     cliente_deletado = get_object_or_404(Cliente, pk=id)
     nome = cliente_deletado.nome
     cliente_deletado.delete()
     
     messages.info(request, 'Cliente ' + nome + ' excluido com sucesso')
-    return redirect('cons_cliente', {'usuario_logado': usuario_logado})
+    return redirect(cons_cliente)
 
 
 @login_required
@@ -154,8 +153,9 @@ def salvar_atend_novo(request):
 @login_required
 def edit_atend(request, id):
     usuario_logado = request.user.username
+    cons_users = User.objects.all()
     dados_logar = get_object_or_404(Atendente, pk=id)
-    return render(request, 'Edit_Atendente.html', {'dodos_do_atend': dados_logar, 'usuario_logado': usuario_logado})
+    return render(request, 'Edit_Atendente.html', {'dados_do_atendente': dados_logar, 'usuario_logado': usuario_logado, 'cons_users': cons_users})
     
     
 @login_required
@@ -205,4 +205,113 @@ def cons_atend(request):
     else:
         return render(request, 'Cons_Atendente.html', {'todos_atendentes': todos_atendentes, 'usuario_logado': usuario_logado})
     
+    
+@login_required
+def salvar_atend_editado(request):
+        usuario_logado = request.user.username
+        if request.method == 'POST':
+            
+            id_atendente  = request.POST.get('id_atendente')
+            nome_atend = request.POST.get('nome_atend')
+            telefone_atend = request.POST.get('telefone_atend')
+            observacao_atend = request.POST.get('observacao_atend')
+            user_atend =  request.POST.get('user_atend')
+            
+            user_atend = User.objects.get(username=user_atend)
+            Atend_Editado = Atendente.objects.get(id=id_atendente)
+            
+            Atend_Editado.nome_atend = nome_atend
+            Atend_Editado.telefone_atend = telefone_atend
+            Atend_Editado.observacao_atend = observacao_atend
+            Atend_Editado.user_atende = user_atend
+            
+            Atend_Editado.save()
         
+            messages.info(request, 'Atendente ' + nome_atend  +' editado com sucesso')
+            return render(request, 'Cons_Atendente.html', {'usuario_logado': usuario_logado})
+
+
+@login_required
+def cad_depto(request):
+    usuario_logado = request.user.username
+    return render(request, 'Cad_Depto.html', {'usuario_logado': usuario_logado})
+
+
+@login_required
+def salvar_depto_novo(request):
+    usuario_logado = request.user.username
+    
+    if (request.method == 'POST'):
+        nome_depto = request.POST.get('nome_depto')
+        observacao_depto = request.POST.get('observacao_depto')
+        
+        grava_depto = Departamento(
+            nome_depto=nome_depto,
+            observacao_depto=observacao_depto,
+            ativo_depto=1
+        )
+        
+        grava_depto.save()
+        messages.info(request, 'Departamento ' + nome_depto + ' cadastrado com sucesso!', 'cad_depto')
+        return render(request, 'Cad_Depto.html', {'usuario_logado': usuario_logado})
+
+
+@login_required
+def cons_depto(request):
+    dado_pesquisa_depto = request.POST.get('departamento')
+    usuario_logado = request.user.username
+    todos_deptos = Departamento.objects.all()
+    page = request.GET.get('page')
+    print(todos_deptos)
+    
+    if page:
+        dado_pesquisa = request.GET.get('dado_pesquisa')
+        depto_lista = Departamento.objects.filter(nome_depto__icontains=dado_pesquisa)
+        
+        paginas = Paginator(depto_lista, 5)
+        page = request.GET.get(page)
+        departamentos = paginas.get_page(page)
+        
+        return render(request, 'Cons_Depto.html', {'todos_deptos': departamentos, 'dado_pesquisa': dado_pesquisa, 'usuario_logado': usuario_logado})
+    
+    if dado_pesquisa_depto != None and dado_pesquisa_depto != '':
+        depto_lista = Departamento.objects.filter(nome_depto__icontains=dado_pesquisa_depto)
+        
+        paginas = Paginator(depto_lista, 5)
+        page = request.GET.get(page)
+        departamentos = paginas.get_page(page)
+        
+        return render(request, 'Cons_Depto.html', {'todos_deptos': departamentos, 'dado_pesquisa': dado_pesquisa_depto, 'usuario_logado': usuario_logado})
+    else:
+        return render(request, 'Cons_Depto.html', {'todos_deptos': todos_deptos, 'usuario_logado': usuario_logado})
+
+
+@login_required
+def edit_depto(request, id):
+    usuario_logado = request.user.username
+    dados_editar = get_object_or_404(Departamento, pk=id)
+    return render(request, 'Edit_Depto.html', {'usuario_logado': usuario_logado, 'dados_do_depto': dados_editar})
+
+def salvar_depto_editado(request):
+        usuario_logado = request.user.username
+        if request.method == 'POST':
+            
+            id_departamento  = request.POST.get('id_departamento')
+            nome_depto = request.POST.get('nome_depto')
+            observacao_depto = request.POST.get('observacao_depto')
+            
+            Depto_Editado = Departamento.objects.get(id=id_departamento)
+            
+            Depto_Editado.nome_depto = nome_depto
+            Depto_Editado.observacao_depto = observacao_depto   
+            
+            Depto_Editado.save()
+        
+            messages.info(request, 'Departamento ' + nome_depto  +' editado com sucesso')
+            return render(request, 'Cons_Depto.html', {'usuario_logado': usuario_logado})
+        
+
+@login_required
+def cad_situacao(request):
+    usuario_logado = request.user.username
+    return render(request, 'Cad_Situacao.html', {'usuario_logado': usuario_logado})
