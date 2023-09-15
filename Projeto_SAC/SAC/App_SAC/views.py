@@ -58,8 +58,6 @@ def cons_cliente(request):
             
         return render(request, 'Cons_Cliente_Lista.html', {'dados_clientes': cliente, 'dado_pesquisa': dado_pesquisa})
         
-    
-        
     if dado_pesquisa_nome is not None and dado_pesquisa_nome != '':
         clientes = Cliente.objects.filter(nome__icontains=dado_pesquisa_nome)
         
@@ -262,7 +260,6 @@ def cons_depto(request):
     usuario_logado = request.user.username
     todos_deptos = Departamento.objects.all()
     page = request.GET.get('page')
-    print(todos_deptos)
     
     if page:
         dado_pesquisa = request.GET.get('dado_pesquisa')
@@ -315,3 +312,76 @@ def salvar_depto_editado(request):
 def cad_situacao(request):
     usuario_logado = request.user.username
     return render(request, 'Cad_Situacao.html', {'usuario_logado': usuario_logado})
+
+@login_required
+def salvar_situacao_novo(request):
+    usuario_logado = request.user.username
+    
+    if (request.method == 'POST'):
+        descricao_situacao = request.POST.get('descricao_situacao')
+        info_situacao = request.POST.get('info_situacao')
+        
+        grava_situacao = Situacao(
+            descricao_situacao=descricao_situacao,
+            info_situacao=info_situacao,
+            ativo_situacao=1
+        )
+        
+        grava_situacao.save()
+        messages.info(request, 'Situacao ' + descricao_situacao + ' cadastrado com sucesso!', 'cad_situacao')
+        return render(request, 'Cad_Situacao.html', {'usuario_logado': usuario_logado})
+
+
+@login_required
+def cons_situacao(request):
+    dado_pesquisa_situacao = request.POST.get('situacao')
+    usuario_logado = request.user.username
+    todas_situacao = Situacao.objects.all()
+    page = request.GET.get('page')
+    print(todas_situacao)
+    
+    if page:
+        dado_pesquisa = request.GET.get('dado_pesquisa')
+        situacao_lista = Situacao.objects.filter(descricao_situacao__icontains=dado_pesquisa)
+        
+        paginas = Paginator(situacao_lista, 5)
+        page = request.GET.get(page)
+        situacao = paginas.get_page(page)
+        
+        return render(request, 'Cons_Situacao.html', {'todas_situacao': situacao, 'dado_pesquisa': dado_pesquisa, 'usuario_logado': usuario_logado})
+    
+    if dado_pesquisa_situacao != None and dado_pesquisa_situacao != '':
+        situacao_lista = Situacao.objects.filter(descricao_situacao__icontains=dado_pesquisa_situacao)
+        
+        paginas = Paginator(situacao_lista, 5)
+        page = request.GET.get(page)
+        situacao = paginas.get_page(page)
+        
+        return render(request, 'Cons_Situacao.html', {'todas_situacao': situacao, 'dado_pesquisa': dado_pesquisa_situacao, 'usuario_logado': usuario_logado})
+    else:
+        return render(request, 'Cons_Situacao.html', {'todas_situacao': todas_situacao, 'usuario_logado': usuario_logado})
+
+
+@login_required
+def edit_situacao(request, id):
+    usuario_logado = request.user.username
+    dados_editar = get_object_or_404(Situacao, pk=id)
+    return render(request, 'Edit_Situacao.html', {'usuario_logado': usuario_logado, 'dados_da_situacao': dados_editar})
+
+def salvar_situacao_editado(request):
+        usuario_logado = request.user.username
+        if request.method == 'POST':
+            
+            id_situacao  = request.POST.get('id_situacao')
+            descricao_situacao = request.POST.get('descricao_situacao')
+            info_situacao = request.POST.get('info_situacao')
+            
+            Situacao_Editado = Situacao.objects.get(id=id_situacao)
+            
+            Situacao_Editado.descricao_situacao = descricao_situacao
+            Situacao_Editado.info_situacao = info_situacao   
+            
+            Situacao_Editado.save()
+        
+            messages.info(request, 'Situação ' + descricao_situacao  +' editado com sucesso')
+            return render(request, 'Cons_Situacao.html', {'usuario_logado': usuario_logado})

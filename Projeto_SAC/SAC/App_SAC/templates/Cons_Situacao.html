@@ -1,34 +1,35 @@
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/Cons_Situacao.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/Cons_Cliente_Lista.css' %}">
     <title>Document</title>
 </head>
 <header class="login">
     <div class="fundo_menu">
         <div class="logo_senai">
-             <a href="/"><img src="imagens/logo_senai.png" /></a>
+             <a href="/"><img src="{% static 'imagens/logo_senai.png' %}" /></a>
         </div>
         <div class="nome_sistema">
              Programação Web Back End<br>
              Sistema de atendimento ao cliente
         </div>
-        
+
+
         <div class="botao_login">
             <a href="accounts/login"><button class="btn btn_login">Login</button></a>
         </div>
-        
-        
+
     </div>
-</header> 
+</header>
 
 
 <nav class="menu">
     <ul>
-       
+        {% if user.is_authenticated %}
         <li><a href="">Cadastros</a>
             <ul>
                 <li><a href="Cad_Cliente.html">Clientes</a></li>
@@ -49,7 +50,7 @@
         <li><a href="Consultar.html">Consultar Atendimento</a></li>
         <li><a href="Relatorios.html">Relatórios</a></li>
         <li> | Usuário logado: {{usuario_logado}}</a></li>
-       
+        {% endif %}
     </ul> 
 </nav> 
      
@@ -59,20 +60,17 @@
         <section class="enquadramento">
             <h1> Consultar Situação (ou Status)</h1>
         </section>
-        
-        
        
-            <ul class="mensagem_do_servidor" style="background: #7d7f81; padding: 24px; text-align:center; color: #fff;">
-       
+        {% if messages %}
+        <ul class="mensagem_do_servidor" style="background: #7d7f81; padding: 24px; text-align:center; color: #fff;">
+            {% for mensagem in messages %}
+                <li style="list-style: none;"> {{mensagem}}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
 
-                      <li style="list-style: none;">MENSAGEM DO SERVIDOR</li>
+        <form id="form" class="form" method="POST" action="{% url 'cons_situacao' %}">{% csrf_token %}
 
-       
-            </ul>
-       
-        
-
-        <form id="form" class="form" >
 
             
             <div class="seleciona_todos">
@@ -84,8 +82,6 @@
             <div class="form-content">
                 <br>
                 <label for="situacao">Situacao</label>
-                
-                
                 <input type="text" id="situacao" name="situacao" placeholder="Digite a Situação desejada" value=""/>
                 
             </div>
@@ -100,11 +96,18 @@
                 </div>
         </form>
         <hr>
-        INSERIR PAGINAÇÂO AQUI
+        {% if todas_situacao.has_previous %}
+            <a href="?page={{todas_situacao.previous_page_number}}&dado_pesquisa={{dado_pesquisa}}"><i class="fas fa-arrow-left"></i></a>
+        {% endif %}
 
         <span>
-            {{ todas_situacoes.number }} de {{ todas_situacoes.paginator.num_pages }}
+            {{todas_situacao.number}} de {{todas_situacao.paginator.num_pages}}
         </span>
+
+        {% if todas_situacao.has_next %}
+            <a href="?page={{todas_situacao.next_page_number}}&dado_pesquisa={{dado_pesquisa}}"><i class="fas fa-arrow-right"></i></a>
+        {% endif %}
+
 
         
         <table>
@@ -116,12 +119,13 @@
             </tr>
             
             <tr>
-                <td>Atendimento</td>
-                <td>Utilizar quando inciar o atendimento </td>
-                <td>Sim</td>
+                {% for igs in todas_situacao %}
+            <tr>
+                <td>{{igs.descricao_situacao}}</td>
+                <td>{{igs.info_situacao}}</td>
                 <td><a href="/edit_situacao/{{igs.id}}"><i class="fa-solid fa-pen-to-square"></i></a></td>
-                
             </tr>
+            {% endfor %}
             
         </table>
 

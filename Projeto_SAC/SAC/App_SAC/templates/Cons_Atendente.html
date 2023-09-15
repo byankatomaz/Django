@@ -29,7 +29,7 @@
 
 <nav class="menu">
     <ul>
-
+        {% if user.is_authenticated %}
         <li><a href="">Cadastros</a>
             <ul>
                 <li><a href="Cad_Cliente.html">Clientes</a></li>
@@ -50,8 +50,8 @@
         <li><a href="Consultar.html">Consultar Atendimento</a></li>
         <li><a href="Relatorios.html">Relatórios</a></li>
         <li> | Usuário logado: {{usuario_logado}}</a></li>
-
-    </ul>
+        {% endif %}
+    </ul> 
 </nav>
 
 <body>
@@ -99,19 +99,25 @@
                 </div>
         </form>
         <hr>
-        {% if todos_atendentes.has_previous %}
-            <a href="?page={{todos_atendentes.previous_page_number}}&dado_pesquisa={{dado_pesquisa}}"><i class="fas fa-arrow-left"></i></a>
-        {% endif %}
-
-        <span>
-            {{todos_atendentes.number}} de {{todos_atendentes.paginator.num_pages}}
-        </span>
-
-        {% if todos_atendentes.has_next %}
-            <a href="?page={{todos_atendentes.next_page_number}}&dado_pesquisa={{dado_pesquisa}}"><i class="fas fa-arrow-right"></i></a>
-        {% endif %}
 
         <table>
+
+            <div class="pagination">
+                <span class="step-links">
+                    {% if todos_atendentes.has_previous %}
+                        <a href="?page={{ todos_atendentes.previous_page_number }}&dado_pesquisa={{dado_pesquisa}}">Anterior</a>
+                    {% endif %}
+                
+                    <span class="current">
+                        {{ todos_atendentes.number }} de {{ todos_atendentes.paginator.num_pages }}
+                    </span>
+                
+                    {% if todos_atendentes.has_next %}
+                        <a href="?page={{ todos_atendentes.next_page_number }}&dado_pesquisa={{dado_pesquisa}}">Próxima</a>
+                    {% endif %}
+                </span>
+            </div>
+
             <tr>
                 <th>Atendente</th>
                 <th>Telefone</th>

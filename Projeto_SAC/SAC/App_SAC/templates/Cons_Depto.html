@@ -74,13 +74,13 @@
         
         <!-- https://www.w3schools.com/cssref/index.php -->
         
-        <form id="form" class="form" method="POST" action="{% url 'cons_depto' %}">{% csrf_token %}
+        <form id="form" class="form" method="POST" action="{% url 'cons_depto' %}" >{% csrf_token %}
 
             <br><hr><br>
             <div class="form-content">
                 <br>
                 <label for="depto">Departamento </label>
-                <input type="text" id="depto" name="departamento" placeholder="Digite o nome do Departamento desejado" value="" />
+                <input type="text" id="depto" name="departamento" placeholder="Digite o nome do Departamento desejado" />
             </div>
            
                 
@@ -93,20 +93,25 @@
                 </div>
         </form>
         <hr>
-        
-        {% if todos_deptos.has_previous %}
-            <a href="?page={{todos_deptos.previous_page_number}}&dado_pesquisa={{dado_pesquisa}}"><i class="fas fa-arrow-left"></i></a>
-        {% endif %}
-
-        <span>
-            {{todos_deptos.number}} de {{todos_deptos.paginator.num_pages}}
-        </span>
-
-        {% if todos_deptos.has_next %}
-            <a href="?page={{todos_deptos.next_page_number}}&dado_pesquisa={{dado_pesquisa}}"><i class="fas fa-arrow-right"></i></a>
-        {% endif %}
 
         <table>
+
+            <div class="pagination">
+                <span class="step-links">
+                    {% if todos_deptos.has_previous %}
+                        <a href="?page={{ todos_deptos.previous_page_number }}&dado_pesquisa={{dado_pesquisa}}">Anterior</a>
+                    {% endif %}
+                
+                    <span class="current">
+                        {{ todos_deptos.number }} de {{ todos_deptos.paginator.num_pages }}
+                    </span>
+                
+                    {% if todos_deptos.has_next %}
+                        <a href="?page={{ todos_deptos.next_page_number }}&dado_pesquisa={{dado_pesquisa}}">Próxima</a>
+                    {% endif %}
+                </span>
+            </div>
+            
             <tr>
                 <th>Departamento</th>
                 <th>Informações do Departamento</th>

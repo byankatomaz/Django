@@ -23,9 +23,9 @@ urlpatterns = [
     path('salvar_depto_editado', views.salvar_depto_editado, name='salvar_depto_editado'),
 
     path('cad_situacao', views.cad_situacao, name='cad_situacao'),
-    # path('salvar_situacao_novo', views.salvar_situacao_novo, name='salvar_situacao_novo'),
-    # path('cons_situacao', views.cons_situacao, name='cons_situacao'),
-    # path('edit_situacao/<int:id>', views.edit_situacao, name='edit_situacao'),
-    # path('salvar_situacao_editado', views.salvar_situacao_editado, name='salvar_situacao_editado'),
+    path('salvar_situacao_novo', views.salvar_situacao_novo, name='salvar_situacao_novo'),
+    path('cons_situacao', views.cons_situacao, name='cons_situacao'),
+    path('edit_situacao/<int:id>', views.edit_situacao, name='edit_situacao'),
+    path('salvar_situacao_editado', views.salvar_situacao_editado, name='salvar_situacao_editado'),
     
 ]

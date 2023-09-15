@@ -273,9 +273,9 @@ tr:nth-child(2n){
 
 /* Ícone da fonte awesome */
 .fa-solid.fa-pen-to-square, .fa-solid.fa-trash {
- cursor: pointer;
- margin: 5px;
- color: black;
+    cursor: pointer;
+    margin: 5px;
+    color: black;
 
 }
 
@@ -301,4 +301,24 @@ div.rodape1 {
 .form-content.error a{
     color: #ff3b25;
     visibility: visible; 
+}
+
+.step-links {
+	display: block;
+    width: 200px;
+    margin: 30px auto;
+    height: 50px;
+    position: relative;
+    text-align: center;
+    padding-top: 15px;
+}
+
+
+.step-links a {
+	color: #00A572;
+	transition: .5s;
+}
+
+.step-links a:hover {
+	color: #000;
 }

@@ -302,3 +302,23 @@ div.rodape1 {
     color: #ff3b25;
     visibility: visible; 
 }
+
+.step-links {
+	display: block;
+    width: 200px;
+    margin: 30px auto;
+    height: 50px;
+    position: relative;
+    text-align: center;
+    padding-top: 15px;
+}
+
+
+.step-links a {
+	color: #00A572;
+	transition: .5s;
+}
+
+.step-links a:hover {
+	color: #000;
+}

@@ -26,7 +26,7 @@
 
 <nav class="menu">
     <ul>
-        
+        {% if user.is_authenticated %}
         <li><a href="">Cadastros</a>
             <ul>
                 <li><a href="Cad_Cliente.html">Clientes</a></li>
@@ -46,9 +46,11 @@
         <li><a href="Registrar.html">Registrar Atendimento</a></li>
         <li><a href="Consultar.html">Consultar Atendimento</a></li>
         <li><a href="Relatorios.html">Relatórios</a></li>
+        <li> | Usuário logado: {{usuario_logado}}</a></li>
+        {% endif %}
         
     </ul> 
-</nav>      
+</nav>         
 <body>
     <div class="principal">
     <div class="container">
@@ -57,23 +59,26 @@
         </section>
         
           
-            <ul class="mensagem_do_servidor" style="background: #7d7f81; padding: 24px; text-align:center; color: #fff;">
-                
-                   <li style="list-style: none;" >MENSAGEM DO SERVIDOR</li>
-                {
-            </ul>
+        {% if messages %}
+        <ul class="mensagem_do_servidor" style="background: #7d7f81; padding: 24px; text-align:center; color: #fff;">
+            {% for mensagem in messages %}
+               <li style="list-style: none;" {% if mensagem.tags %}class="alert alert-{{message.tags}}"{% endif %}>{{mensagem}}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
         
         
-        <form id="form" class="form" ></form>
+        <form id="form" class="form" method="POST" action="{% url 'salvar_situacao_novo' %}" >{% csrf_token %}
+
             
                 <div class="form-content">
                     <label for="nome">Situação(ou Status)</label>
-                    <input type="text" id="nome" name="situacao" placeholder="Digite a descrição da Situação (ou Status)" />
+                    <input type="text" id="nome" name="descricao_situacao" placeholder="Digite a descrição da Situação (ou Status)" />
                     <a>Nome deve ter no mínimo 3 caracteres</a>
                 </div>
                 <div class="form-content">
                     <label for="observacao">Informações sobre uso da Situação (ou Status)</label>
-                    <textarea id="observacao" name="informacao" cols="25" rows="10" placeholder="Digite aqui quando esta situação deve ser atribuída a um chamado"></textarea>
+                    <textarea id="observacao" name="info_situacao" cols="25" rows="10" placeholder="Digite aqui quando esta situação deve ser atribuída a um chamado"></textarea>
                     <a>Informações sobre a Situação</a>
                 </div>
                 <div class="botoes">

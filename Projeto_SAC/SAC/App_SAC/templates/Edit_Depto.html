@@ -26,7 +26,7 @@
 
 <nav class="menu">
     <ul>
-        
+        {% if user.is_authenticated %}
         <li><a href="">Cadastros</a>
             <ul>
                 <li><a href="Cad_Cliente.html">Clientes</a></li>
@@ -47,9 +47,9 @@
         <li><a href="Consultar.html">Consultar Atendimento</a></li>
         <li><a href="Relatorios.html">Relatórios</a></li>
         <li> | Usuário logado: {{usuario_logado}}</a></li>
-        
+        {% endif %}
     </ul> 
-</nav>      
+</nav>       
 <body>
     <div class="principal">
     <div class="container">
