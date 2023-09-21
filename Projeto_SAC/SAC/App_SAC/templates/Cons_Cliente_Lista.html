@@ -10,33 +10,50 @@
 <header class="login">
     <div class="fundo_menu">
         <div class="logo_senai">
-             <a href="/"><img src="{% static 'imagens/logo_senai.png' %}" /></a>
+            <a href="/"><img src="{% static 'imagens/logo_senai.png' %}" /></a>
+
         </div>
         <div class="nome_sistema">
              Programação Web Back End<br>
              Sistema de atendimento ao cliente
         </div>
+        {% if user.is_authenticated %}
         <div class="botao_login">
-            <button class="btn btn_login">Login</button>
-        </div> 
+            <a href="accounts/logout"><button class="btn btn_login">Logout</button></a>
+        </div>
+        {% else %}
+        <div class="botao_login">
+            <a href="accounts/login"><button class="btn btn_login">Login</button></a>
+        </div>
+        {% endif %}
     </div>
 </header> 
 
 
 <nav class="menu">
     <ul>
-        <li><a href="Cadastros">Cadastros</a>
+        {% if user.is_authenticated %}
+        <li><a href="">Cadastros</a>
             <ul>
-                <li><a href="Cad_Cliente.html">Clientes</a></li>
-                <li><a href="Departamentos">Departamentos</a></li>
-                <li><a href="Atendentes">Atendentes</a></li>
-                <li><a href="Situações">Situações</a></li>
+                <li><a href="cad_cliente">Clientes</a></li>
+                <li><a href="cad_depto">Departamentos</a></li>
+                <li><a href="cad_atend">Atendentes</a></li>
+                <li><a href="cad_situacao">Situações</a></li>
+            </ul>
+        </li>   
+        <li><a href="">Consultar</a>
+            <ul>
+                <li><a href="cons_cliente">Clientes</a></li>
+                <li><a href="cons_depto">Departamentos</a></li>
+                <li><a href="cons_atend">Atendentes</a></li>
+                <li><a href="cons_situacao">Situações</a></li>
             </ul>
         </li>    
-        <li><a href="Registrar">Registrar Atendimento</a></li>
-        <li><a href="Consultar">Consultar Atendimento</a></li>
-        <li><a href="Relatorios">Relatórios</a></li>
+        <li><a href="Registrar.html">Registrar Atendimento</a></li>
+        <li><a href="cons_atend">Consultar Atendimento</a></li>
+        <li><a href="Relatorios.html">Relatórios</a></li>
         <li> | Usuário logado: {{usuario_logado}}</a></li>
+        {% endif %}
     </ul> 
 </nav> 
      

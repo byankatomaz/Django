@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from datetime import datetime
 
 @login_required
 def abrir_index(request):
@@ -385,3 +386,48 @@ def salvar_situacao_editado(request):
         
             messages.info(request, 'Situação ' + descricao_situacao  +' editado com sucesso')
             return render(request, 'Cons_Situacao.html', {'usuario_logado': usuario_logado})
+        
+
+def reg_atend_busca(request):
+    usuario_logado = request.user.username
+    dado_pesquisa_nome = request.POST.get('sel_cliente')
+   
+    cons_depto = Departamento.objects.all()
+    data_e_hora = datetime.now()
+
+    data_e_hora = data_e_hora.strftime("%d/%m/%Y %H:%M:%S")
+
+    page = request.GET.get('page')
+
+    if page:
+        dado_pesquisa = request.GET.get('dado_pesquisa')
+        cliente_lista = Cliente.objects.filter(nome__icontains=dado_pesquisa)
+        paginas = Paginator(cliente_lista, 3)
+        clientes = paginas.get_page(page)
+        
+        return render(request, 'Reg_Atendimento_busca.html', {'dados_clientes': clientes, 'dado_pesquisa':dado_pesquisa_nome, 'cons_depto':cons_depto, 'data_e_hora':data_e_hora, 'usuario_logado': usuario_logado})
+
+
+    if dado_pesquisa_nome != None and dado_pesquisa_nome != '':
+        clientes_lista = Cliente.objects.filter(nome__icontains=dado_pesquisa_nome)
+        paginas = Paginator(clientes_lista, 3)
+        page = request.GET.get('page')
+        clientes = paginas.get_page(page)
+
+        return render(request, 'Reg_Atendimento_busca.html', {'dados_cliente': clientes, 'dado_pesquisa': dado_pesquisa_nome, 'cons_depto': cons_depto, 'data_e_hora': data_e_hora, 'usuario_logado': usuario_logado})
+
+
+    else:
+        return render(request, 'Reg_Atendimento_busca.html', {'dados_clientes': dado_pesquisa_nome, 'usuario_logado': usuario_logado})
+    
+
+def sel_cliente(request, id):
+    usuario_logado = request.user.username
+    data_e_hora = datetime.now()
+
+    data_e_hora = data_e_hora.strftime("%d/%m/%Y %H:%M:%S")
+   
+    cons_depto = Departamento.objects.all()
+    clientes = get_object_or_404(Cliente, pk=id)
+
+    return render(request, 'Reg_Atendimento_busca.html', {'cliente_sel': clientes, 'usuario_logado': usuario_logado, 'cons_depto':cons_depto, 'data_e_hora':data_e_hora})

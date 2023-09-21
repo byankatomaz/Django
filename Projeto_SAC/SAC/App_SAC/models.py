@@ -43,4 +43,14 @@ class Situacao(models.Model):
 
     def __str__(self):
         return self.descricao_situacao
-    
+
+class Atendimento(models.Model):
+  solicitacao = models.TextField()
+  cliente = models.ForeignKey(Cliente, null=True, on_delete=models.PROTECT)
+  departamento = models.ForeignKey(Departamento, null=True, on_delete=models.PROTECT)
+  atendente = models.ForeignKey(Atendente, null=True, on_delete=models.PROTECT)
+  criado_em = models.DateField(auto_now_add=True)
+  encerrado = models.BooleanField()
+
+  def __str__(self) -> str:
+     return self.solicitacao

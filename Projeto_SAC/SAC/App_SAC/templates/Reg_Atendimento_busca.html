@@ -1,11 +1,12 @@
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/Cons_Depto.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/Reg_Atend.css' %}">
+
+
     <title>Document</title>
 </head>
 <header class="login">
@@ -62,79 +63,98 @@
     <div class="principal">
     <div class="container">
         <section class="enquadramento">
-            <h1> Consultar Departamentos</h1>
+            <h1> Registrar Atendimento</h1>
         </section>
-        
+
         {% if messages %}
             <ul class="mensagem_do_servidor" style="background: #7d7f81; padding: 24px; text-align:center; color: #fff;">
                 {% for mensagem in messages %}
-                    <li style="list-style: none;"> {{mensagem}}</li>
+                   <li style="list-style: none;" {% if mensagem.tags %}class="alert alert-{{message.tags}}"{% endif %}>{{mensagem}}</li>
                 {% endfor %}
             </ul>
         {% endif %}
         
-        <!-- https://www.w3schools.com/cssref/index.php -->
-        
-        <form id="form" class="form" method="POST" action="{% url 'cons_depto' %}" >{% csrf_token %}
 
-            <br><hr><br>
-            <div class="form-content">
-                <br>
-                <label for="depto">Departamento </label>
-                <input type="text" id="depto" name="departamento" placeholder="Digite o nome do Departamento desejado" />
+        <div class = "num_hora">
+            <div class="informe num_atend">
+                <label for="numero_atendimento">Atendimento:{{cons_ultimo}}</label>
+                <label id="numero"></label>
+
+            </div>
+            <div class="informe hora_atend">
+                <label for="hora_atendimento">Data e Hora:</label>
+                <label id="hora">{{data_e_hora}}</label>
+            </div>
+        </div>
+        
+        <hr>
+        
+        <form id="form_busca_cliente" class="form_busca_cliente" method="POST" action="{% url 'salvar_atend_novo' %}">{% csrf_token %}
+
+
+            <div class="input_pesquisar_cliente">
+                <label for="sel_cliente">Cliente</label>
+                <input type="text" id="sel_cliente" name="sel_cliente" value="" placeholder="Selecione o Cliente" />
+            </div>
+            <div class="btn_pesquisar_cliente">
+                <button type="submit" id="btnPesquisar_Cliente" >Pesquisar</button>
             </div>
            
+        </form>
+        
+        <table id="clientes">
+            {% for igs in dados_clientes %}
+            <tr>
+                <td>{{igs.nome}}</td>
+                <td>{{igs.telefone}}</td>
+                <td>{{igs.email}}</td>
+                <td>{{igs.observacao}}</td>
+                <td><a href="">34</a></td>
+
+            </tr>
+            {% endfor %}
+        </table>
+        <hr>
+
+
+        <form id="form" class="form"method="POST" action="">
+            
+                
+                <div class="form-content">
+                    <label for="solicitacao">Solicitação</label>
+                    <input type="hidden"  name="id_cliente" id="id_cliente"  value="{{cliente_sel.id}}" />
+                    <textarea name="solicitacao" id="solicitacao" cols="25" rows="10" placeholder="Descreva aqui a solicitção do cliente"></textarea>
+                    <a>Solicitação</a>
+                </div>
+
+                <div class="form-content">
+                    <label for="encaminhar">Encaminhar para </label>
+                    <select name="encaminhar">
+                        <option value="">Indique o Departamento para encaminhar a solicitação</option>
+                        {% for igs in cons_depto %}
+                        <option value="{{igs.id}}">{{igs.descricao_departamento}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
                 
                 
                 <div class="botoes">
-                    <div class="botao_consultar">
-                        <button id="btnConsultar" type=submit class="btn_cons_cancel btn_consultar">Consultar</button>
+                    <div class="botao_confirmar">
+                        <button id="btnConfirmar" class="btn_conf_cancel btn_confirmar">Confirmar</button>
                     </div>
+
 
                 </div>
         </form>
-        <hr>
 
-        <table>
-
-            <div class="pagination">
-                <span class="step-links">
-                    {% if todos_deptos.has_previous %}
-                        <a href="?page={{ todos_deptos.previous_page_number }}&dado_pesquisa={{dado_pesquisa}}">Anterior</a>
-                    {% endif %}
-                
-                    <span class="current">
-                        {{ todos_deptos.number }} de {{ todos_deptos.paginator.num_pages }}
-                    </span>
-                
-                    {% if todos_deptos.has_next %}
-                        <a href="?page={{ todos_deptos.next_page_number }}&dado_pesquisa={{dado_pesquisa}}">Próxima</a>
-                    {% endif %}
-                </span>
-            </div>
-            
-            <tr>
-                <th>Departamento</th>
-                <th>Informações do Departamento</th>
-                <th>Editar</th>
-            </tr>
-            
-            {% for igs in todos_deptos %}
-            <tr>
-                <td>{{igs.nome_depto}}</td>
-                <td>{{igs.observacao_depto}}</td>
-                <td><a href="/edit_depto/{{igs.id}}"><i class="fa-solid fa-pen-to-square"></i></a></td>
-            </tr>
-            {% endfor %}
-         
-        </table>
 
 
     </div>    
     </div>
 
-<!--<script src="{% static 'js/script.js' %}"></script>-->
-<script src="https://kit.fontawesome.com/c9237383f1.js" crossorigin="anonymous"></script>
+
+
+
 
 </body>
 

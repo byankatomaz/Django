@@ -28,4 +28,6 @@ urlpatterns = [
     path('edit_situacao/<int:id>', views.edit_situacao, name='edit_situacao'),
     path('salvar_situacao_editado', views.salvar_situacao_editado, name='salvar_situacao_editado'),
     
+    path('reg_atend_busca', views.reg_atend_busca, name='reg_atend_busca'),
+    
 ]
