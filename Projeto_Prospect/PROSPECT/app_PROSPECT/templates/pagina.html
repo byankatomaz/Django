@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <ul>
+        {% for item  in page %}
+            <li>{{item}}</li>
+        {% endfor %}
+    </ul>
+
+    <div class="pagiantion">
+        <span class="step-links">
+            {% if page.has_previous %}
+                <a href="?pagina={{ posts.previous_page_number}}">Anterior</a>
+            {% endif %}
+
+            <span>
+                {{ page.number }} de {{ posts.paginator.num_pages }}
+            </span>
+
+            {% if page.has_next %}
+                <a href="?pagina={{ posts.nex_page_number }}">
+                    Próxima
+                </a>
+            {% endif %}
+        </span>
+    </div>
+</body>
+</html>
